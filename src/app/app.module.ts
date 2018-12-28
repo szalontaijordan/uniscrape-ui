@@ -39,7 +39,7 @@ export class AppModule {
   constructor(private ngRedux: NgRedux<AppState>, private authEpics: AuthEpics) {
     const epicMiddleware = createEpicMiddleware();
 
-    ngRedux.configureStore(combineReducers({ auth: authReducer }), DEFAULT_APP_STATE, [
+    this.ngRedux.configureStore(combineReducers({ auth: authReducer }), DEFAULT_APP_STATE, [
       createLogger(),
       epicMiddleware
     ]);
