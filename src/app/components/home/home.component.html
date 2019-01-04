@@ -1,3 +1,5 @@
-<p>
-  home works!
-</p>
+<div>
+  <img [src]="(auth | async)?.currentUser.imageUrl" alt="Profile picture" />
+  <div>{{ (auth | async)?.currentUser.name }}</div>
+  <div>{{ (auth | async)?.currentUser.email }}</div>
+</div>

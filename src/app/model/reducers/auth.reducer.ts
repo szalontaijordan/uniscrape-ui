@@ -7,23 +7,30 @@ export const authReducer: Reducer<AuthState> = (state: AuthState = DEFAULT_APP_S
         case AuthActions.AUTH_LOGIN_STARTED:
             return {
                 ...state,
+                isLoading: true,
                 stayLoggedIn: action.payload
             };
         case AuthActions.AUTH_LOGIN_SUCCEEDED:
             return {
                 ...state,
                 isLoggedIn: true,
+                isLoading: false,
+                userIdToken: action.payload.idToken,
+                currentUser: action.payload.user,
                 errorMessage: ''
             };
         case AuthActions.AUTH_LOGIN_FAILED:
             return {
                 ...state,
-                errorMessage: action.payload.error.code
+                isLoading: false,
+                errorMessage: action.payload.error
             };
         case AuthActions.AUTH_LOGOUT:
             return {
                 ...state,
-                isLoggedIn: false
+                isLoggedIn: false,
+                userIdToken: '',
+                currentUser: null
             };
         default:
             return {

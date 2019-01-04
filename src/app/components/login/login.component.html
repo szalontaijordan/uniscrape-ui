@@ -1,2 +1,11 @@
-<button (click)="authActions.login()">Log in</button>
-{{ auth | async | json }}
+<div class="layout">
+    <h1>UniScrape</h1>
+    <button class="login" (click)="login()">
+        <img src="../../../assets/images/google-logo.png" alt="(G)">
+        <span>Log in with Google</span>
+    </button>
+    <div class="loading-wrapper">
+            <div *ngIf="(auth | async).isLoading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+            <p>{{ infoMessage }}</p>        
+    </div>
+</div>

@@ -14,16 +14,42 @@ export class LoginComponent implements OnInit {
 
   @select()
   auth: Observable<AuthState>;
-
   subscription: Subscription;
 
-  constructor(public authActions: AuthActions, private router: Router) {
+  infoMessage: string;
+
+  constructor(private authActions: AuthActions, private router: Router) {
   }
 
   ngOnInit() {
     this.subscription = this.auth.subscribe({
-      next: data => data.isLoggedIn && this.router.navigate(['home'])
-        .then(() => this.subscription.unsubscribe())
+      next: data => {
+        if (data.isLoggedIn) {
+          this.router.navigate(['home']).then(() => this.subscription.unsubscribe());
+        }
+        this.infoMessage = this.getErrorMessageFrom(data.errorMessage);
+      }
     });
+  }
+
+  login() {
+    this.authActions.login();
+  }
+
+  private getErrorMessageFrom(error: string): string {
+    if (!error) {
+      return '';
+    }
+
+    switch (error) {
+      case 'popup_closed_by_user':
+        return 'You closed the popup before finishing the consent flow.';
+      case 'access_denied':
+        return 'You denied the permission to the scopes required.';
+      case 'popup_blocked_by_browser':
+        return 'Your browser blocked the default popup window, please try again.';
+      default:
+        return 'There was an internal error while loggin in, please try again.';
+    }
   }
 }
