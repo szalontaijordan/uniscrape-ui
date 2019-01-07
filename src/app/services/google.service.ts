@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { GoogleProfile } from '../model/types/google-profile.type';
 
 @Injectable({
@@ -14,7 +13,7 @@ export class GoogleService {
     'scope': 'profile email',
     'ux_mode': 'popup'
   };
-  
+
   constructor() {
     this.gapi = window['gapi'];
   }
@@ -51,7 +50,7 @@ export class GoogleService {
 
   public me(): Observable<GoogleProfile> {
     const profile = this.gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
-   
+
     const name = profile.getName();
     const imageUrl = profile.getImageUrl();
     const email = profile.getEmail();
@@ -68,5 +67,5 @@ export class GoogleService {
       resolve();
     }));
   }
- 
+
 }

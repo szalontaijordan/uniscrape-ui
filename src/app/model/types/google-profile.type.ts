@@ -3,3 +3,8 @@ export interface GoogleProfile {
     imageUrl: string;
     name: string;
 }
+
+export interface GoogleAuthObject {
+    idToken: string;
+    user: GoogleProfile;
+}

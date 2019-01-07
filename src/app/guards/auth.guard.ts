@@ -1,33 +1,49 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { NgRedux } from '@angular-redux/store';
 import { AppState } from '../model/state';
 import { AuthActions } from '../model/actions/auth.actions';
+import { GoogleAuthObject } from '../model/types/google-profile.type';
+import { AuthService } from '../services/auth.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private ngRedux: NgRedux<AppState>, private router: Router) {
+  constructor(private ngRedux: NgRedux<AppState>, private router: Router, private authService: AuthService) {
   }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      const google = localStorage.getItem('google');
+      const google = JSON.parse(localStorage.getItem('google')) as GoogleAuthObject;
 
-      if (this.ngRedux.getState().auth.isLoggedIn) {
-        return true;
+      if (!google || !(typeof google.idToken === 'string')) {
+        this.router.navigate(['login']);
+        return of(false);
       }
 
-      if (google) {
-        this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGIN_SUCCEEDED, payload: JSON.parse(google) });
-        return true;
-      }
+      return this.authService.isTokenValid(google.idToken).pipe(
+        map(isValid => {
+          if (isValid) {
+            if (!this.ngRedux.getState().auth.isLoggedIn) {
+              this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGIN_SUCCEEDED, payload: google });
+            }
 
-      this.router.navigate(['login']);
-      return false;
+            return true;
+          } else {
+            // TODO implement correct logic with logging out
+            this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGIN_STARTED, payload: google });
+          }
+
+          this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGOUT });
+          this.router.navigate(['login']);
+          return false;
+        })
+      );
   }
+
 }

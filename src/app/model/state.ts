@@ -1,4 +1,4 @@
-import { GoogleProfile } from "./types/google-profile.type";
+import { GoogleProfile } from './types/google-profile.type';
 
 export interface AppState {
     auth: AuthState;
