@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.bookActions.fetchSectionNames();
-    
+
     this.subscription = this.home.subscribe({
       next: data => {
         if (data.sectionNames.length !== 0 && data.bookSections.length === 0) {

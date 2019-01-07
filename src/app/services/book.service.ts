@@ -18,7 +18,7 @@ export class BookService {
     }
 
     getSection(name: string): Observable<{ name: string, items: Array<any> }> {
-        return this.http.get<{ books: Array<any> }>('/api/book/depository/section/${name}', { headers: this.headersObject }).pipe(
+        return this.http.get<{ books: Array<any> }>('/api/book/depository/section/' + name, { headers: this.headersObject }).pipe(
             map(response => ({ name, items: response.books }))
         );
     }
