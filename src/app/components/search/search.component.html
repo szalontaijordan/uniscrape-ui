@@ -1,5 +1,5 @@
 <div class="search">
-  <div class="recent" *ngIf="(search | async).recent.length; else #noRecent">
+  <div class="recent" *ngIf="(search | async).recent.length; else noRecent">
     <span
       *ngFor="let recentItem of (search | async).recent"
       (click)="searchActions.updateSearchTerm(recentItem)" 
