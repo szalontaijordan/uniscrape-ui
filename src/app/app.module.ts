@@ -46,7 +46,8 @@ export class AppModule {
 
     epicMiddleware.run(combineEpics(
       this.authEpics.login,
-      this.authEpics.logout
+      this.authEpics.logout,
+      this.authEpics.refresh
     ));
   }
 

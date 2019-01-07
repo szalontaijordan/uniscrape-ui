@@ -34,4 +34,18 @@ export class AuthEpics {
             }))
         ))
     )
+
+    refresh = (action$: ActionsObservable<any>) => action$.pipe(
+        ofType(AuthActions.AUTH_LOGIN_REFRESH),
+        mergeMap(action => from(this.googleService.refresh()).pipe(
+            map(payload => ({
+                type: AuthActions.AUTH_LOGIN_REFRESH_SUCCEEDED,
+            })),
+            catchError(payload => of({
+                type: AuthActions.AUTH_LOGIN_REFRESH_FAILED,
+                payload
+            }))
+        ))
+    )
+
 }

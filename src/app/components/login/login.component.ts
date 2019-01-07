@@ -49,6 +49,9 @@ export class LoginComponent implements OnInit {
       case 'popup_blocked_by_browser':
         return 'Your browser blocked the default popup window, please try again.';
       default:
+        if (error.match('refresh_')) {
+          return `${error.substring(8)}, please log in again, so we can make sure it is you.`;
+        }
         return 'There was an internal error while loggin in, please try again.';
     }
   }

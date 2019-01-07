@@ -9,6 +9,9 @@ export class AuthActions {
   }
 
   static AUTH_LOGIN_STARTED = 'AUTH_LOGIN_STARTED';
+  static AUTH_LOGIN_REFRESH = 'AUTH_LOGIN_REFRESH';
+  static AUTH_LOGIN_REFRESH_SUCCEEDED = 'AUTH_LOGIN_REFRESH_SUCCEEDED';
+  static AUTH_LOGIN_REFRESH_FAILED = 'AUTH_LOGIN_REFRESH_FAILED';
   static AUTH_LOGIN_FAILED = 'AUTH_LOGIN_FAILED';
   static AUTH_LOGIN_SUCCEEDED = 'AUTH_LOGIN_SUCCEEDED';
   static AUTH_LOGOUT = 'AUTH_LOGOUT';
@@ -20,5 +23,9 @@ export class AuthActions {
 
   logout(): void {
     this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGOUT });
+  }
+
+  refresh(): void {
+    this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGIN_REFRESH });
   }
 }

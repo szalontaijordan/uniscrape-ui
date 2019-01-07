@@ -29,14 +29,12 @@ export class AuthGuard implements CanActivate {
       return this.authService.isTokenValid(google.idToken).pipe(
         map(isValid => {
           if (isValid) {
-            if (!this.ngRedux.getState().auth.isLoggedIn) {
+            if (!this.ngRedux.getState().auth.isLoading && !this.ngRedux.getState().auth.isLoggedIn) {
               this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGIN_SUCCEEDED, payload: google });
             }
-
+            
+            this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGIN_REFRESH, payload: google });
             return true;
-          } else {
-            // TODO implement correct logic with logging out
-            this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGIN_STARTED, payload: google });
           }
 
           this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGOUT });

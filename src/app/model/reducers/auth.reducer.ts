@@ -10,6 +10,12 @@ export const authReducer: Reducer<AuthState> = (state: AuthState = DEFAULT_APP_S
                 isLoading: true,
                 stayLoggedIn: action.payload
             };
+        case AuthActions.AUTH_LOGIN_REFRESH:
+            return {
+                ...state,
+                isLoading: true,
+                errorMessage: `refresh_${action.payload.user.name.split(' ')[0]}`
+            }
         case AuthActions.AUTH_LOGIN_SUCCEEDED:
             return {
                 ...state,

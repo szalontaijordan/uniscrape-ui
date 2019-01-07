@@ -1,3 +1,4 @@
 <nav>
   <button *ngIf="(auth | async).isLoggedIn" (click)="logout()">Log out</button>
+  The token is valid until: {{ validUntil | date : 'hh:mm:ss' }}
 </nav>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { GoogleProfile } from '../model/types/google-profile.type';
+import { GoogleProfile, GoogleAuthObject } from '../model/types/google-profile.type';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class GoogleService {
     'ux_mode': 'popup'
   };
 
-  constructor() {
+  constructor(private router: Router) {
     this.gapi = window['gapi'];
   }
 
@@ -38,14 +39,34 @@ export class GoogleService {
     };
     localStorage.setItem('google', JSON.stringify(google));
 
+    await this.router.navigate(['home']);
+
     return google;
   }
 
   public async logout(): Promise<any> {
     const user = localStorage.getItem('google')['user'];
     localStorage.removeItem('google');
+    await this.router.navigate(['login']);
 
     return { user };
+  }
+
+  public async refresh(): Promise<any> {
+    if (!this.gapi.auth2) {
+      await this.initAuth2();
+    }
+    const refreshPromise = await this.gapi.auth2.getAuthInstance().currentUser.get().reloadAuthResponse();
+    
+    const currentGoogle = JSON.parse(localStorage.getItem('google'));
+    const google = {
+      ...currentGoogle,
+      idToken: refreshPromise['id_token']
+    }
+    localStorage.setItem('google', JSON.stringify(google));
+
+    await this.router.navigate(['home']);
+    return google;
   }
 
   public me(): Observable<GoogleProfile> {
