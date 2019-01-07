@@ -1,10 +1,13 @@
 <div class="search">
-  <div class="recent">
+  <div class="recent" *ngIf="(search | async).recent.length; else #noRecent">
     <span
       *ngFor="let recentItem of (search | async).recent"
       (click)="searchActions.updateSearchTerm(recentItem)" 
       class="recent-item">{{ recentItem }}</span>
   </div>
+  <ng-template #noRecent>
+    <div class="recent">Your recent searches will appear here.</div>
+  </ng-template>
   <app-search-form
     [searchTerm]="(search | async).searchTerm"
     (bookSearch)="searchActions.searchStart($event)"></app-search-form>
