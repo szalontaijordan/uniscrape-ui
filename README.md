@@ -1,27 +1,34 @@
-# Ui
+# UniScrape Ui
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.3.
+This is the UI of the UniSrape application.
 
-## Development server
+## Installing & Running in Dev mode
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Please follow the following steps:
 
-## Code scaffolding
+1. create a directory on your machine called `uniscrape` (or something you recognise)
+2. in that directory checkout the server/api for this project
+```
+$ git clone https://github.com/szalontaijordan/uniscrape-server.git
+```
+... then the UI part
+```
+$ git clone https://github.com/szalontaijordan/uniscrape-ui.git
+```
+3. enter both the server and the UI directory then in both install it (this may take a long time)
+```
+$ npm install
+```
+4. run the server in the server directory with
+```
+$ npm run dev
+```
+5. run the UI in the UI direcotry with
+```
+$ npm run dev
+```
+6. open the browser at `http://localhost:8080`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+It is important to keep these two repositories in the same directory, because the output of the build task puts the files in the server's public folder, so it can render them.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+The project is still under development, so there is no better method ***yet*** to start working.
