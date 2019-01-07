@@ -5,7 +5,9 @@ import { AuthActions } from '../actions/auth.actions';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { of, from } from 'rxjs';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AuthEpics {
 
     constructor(private googleService: GoogleService) {

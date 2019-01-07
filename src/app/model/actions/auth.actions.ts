@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
 import { AppState } from '../state';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthActions {
 
   constructor(private ngRedux: NgRedux<AppState>) {

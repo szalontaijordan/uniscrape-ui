@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,12 +12,13 @@ import { createLogger } from 'redux-logger';
 import { DEFAULT_APP_STATE, AppState } from './model/state';
 import { AuthEpics } from './model/epics/auth.epic';
 import { createEpicMiddleware, combineEpics } from 'redux-observable';
-import { AuthActions } from './model/actions/auth.actions';
 import { combineReducers } from 'redux';
 
 import { authReducer } from './model/reducers/auth.reducer';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { BookEpics } from './model/epics/book.epic';
+import { bookReducer } from './model/reducers/book.reducer';
 
 @NgModule({
   declarations: [
@@ -29,17 +31,23 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     BrowserModule,
     AppRoutingModule,
     NgReduxModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [AuthEpics, AuthActions],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
 
-  constructor(private ngRedux: NgRedux<AppState>, private authEpics: AuthEpics) {
+  constructor(private ngRedux: NgRedux<AppState>, private authEpics: AuthEpics, private bookEpics: BookEpics) {
     const epicMiddleware = createEpicMiddleware();
 
-    this.ngRedux.configureStore(combineReducers({ auth: authReducer }), DEFAULT_APP_STATE, [
+    const reducers = {
+      auth: authReducer,
+      home: bookReducer
+    };
+
+    this.ngRedux.configureStore(combineReducers(reducers), DEFAULT_APP_STATE, [
       createLogger(),
       epicMiddleware
     ]);
@@ -47,7 +55,9 @@ export class AppModule {
     epicMiddleware.run(combineEpics(
       this.authEpics.login,
       this.authEpics.logout,
-      this.authEpics.refresh
+      this.authEpics.refresh,
+      this.bookEpics.fetchSectionNames,
+      this.bookEpics.fetchSection
     ));
   }
 

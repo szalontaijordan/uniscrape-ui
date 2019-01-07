@@ -24,7 +24,9 @@ export class NavbarComponent implements OnInit {
       next: data => {
         if (window['gapi']['auth2']) {
           this.validUntil = new Date(window['gapi'].auth2.getAuthInstance().currentUser.get().getAuthResponse().expires_at);
-        } 
+        } else {
+          this.validUntil = null;
+        }
       }
     });
   }

@@ -1,4 +1,8 @@
 <nav>
-  <button *ngIf="(auth | async).isLoggedIn" (click)="logout()">Log out</button>
-  The token is valid until: {{ validUntil | date : 'hh:mm:ss' }}
+  <p *ngIf="!!validUntil">The token is valid until: {{ validUntil | date : 'HH:mm:ss' }}</p>
+  <div class="profile">
+    <div class="email">{{ (auth | async)?.currentUser.email }}</div>
+    <div class="image"><img [src]="(auth | async)?.currentUser.imageUrl" alt="Profile picture" /></div>
+    <button *ngIf="(auth | async).isLoggedIn" (click)="logout()">Log out</button>
+  </div>
 </nav>
