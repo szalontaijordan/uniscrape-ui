@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,13 +19,21 @@ import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { BookEpics } from './model/epics/book.epic';
 import { bookReducer } from './model/reducers/book.reducer';
+import { SearchComponent } from './components/search/search.component';
+import { SearchFormComponent } from './components/search/search-form/search-form.component';
+import { searchReducer } from './model/reducers/search.reducer';
+import { SearchEpics } from './model/epics/search.epic';
+import { SearchResultsTabComponent } from './components/search/search-results-tab/search-results-tab.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    SearchComponent,
+    SearchFormComponent,
+    SearchResultsTabComponent
   ],
   imports: [
     BrowserModule,
@@ -39,12 +47,16 @@ import { bookReducer } from './model/reducers/book.reducer';
 })
 export class AppModule {
 
-  constructor(private ngRedux: NgRedux<AppState>, private authEpics: AuthEpics, private bookEpics: BookEpics) {
+  constructor(private ngRedux: NgRedux<AppState>,
+              private authEpics: AuthEpics,
+              private bookEpics: BookEpics,
+              private searchEpics: SearchEpics) {
     const epicMiddleware = createEpicMiddleware();
 
     const reducers = {
       auth: authReducer,
-      home: bookReducer
+      home: bookReducer,
+      search: searchReducer
     };
 
     this.ngRedux.configureStore(combineReducers(reducers), DEFAULT_APP_STATE, [
@@ -57,7 +69,10 @@ export class AppModule {
       this.authEpics.logout,
       this.authEpics.refresh,
       this.bookEpics.fetchSectionNames,
-      this.bookEpics.fetchSection
+      this.bookEpics.fetchSection,
+      this.searchEpics.search,
+      this.searchEpics.recent,
+      this.searchEpics.loadTabIfEmpty
     ));
   }
 

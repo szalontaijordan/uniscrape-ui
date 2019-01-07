@@ -8,26 +8,64 @@ import { Observable, of } from 'rxjs';
 })
 export class BookService {
 
-    private apiURL = 'http://localhost:8080/api/book';
-
     constructor(private http: HttpClient) {
     }
 
     getSectionTitles(): Observable<Array<string>> {
-        return this.http.get<{ sections: Array<string> }>(`${this.apiURL}/depository/sections`, { headers: this.headersObject }).pipe(
+        return this.http.get<{ sections: Array<string> }>('/api/book/depository/sections', { headers: this.headersObject }).pipe(
             map(response => response.sections)
         );
     }
 
     getSection(name: string): Observable<{ name: string, items: Array<any> }> {
-        return this.http.get<{ books: Array<any> }>(`${this.apiURL}/depository/section/${name}`, { headers: this.headersObject }).pipe(
+        return this.http.get<{ books: Array<any> }>('/api/book/depository/section/${name}', { headers: this.headersObject }).pipe(
             map(response => ({ name, items: response.books }))
+        );
+    }
+
+    search(searchTerm: string, activeTab: string): Observable<{ activeTab: string, items: Array<any> }> {
+        switch (activeTab) {
+            case 'depository':
+                return this.depositorySearch(searchTerm);
+            case 'ebay':
+                return this.ebaySearch(searchTerm);
+            case 'amazon':
+                return this.amazonSearch(searchTerm);
+            default:
+                return of({ activeTab, items: [] });
+        }
+    }
+
+    getRecentSearches(): Observable<Array<string>> {
+        return this.http.get<{ recentSearches: Array<string> }>('/api/book/all/recent', { headers: this.headersObject }).pipe(
+            map(response => response.recentSearches)
+        );
+    }
+
+    private depositorySearch(searchTerm: string): Observable<{ activeTab: string, items: Array<any> }> {
+        return this.http.get<{ books: Array<any> }>('/api/book/depository/search/' + searchTerm, { headers: this.headersObject }).pipe(
+            map(response => ({ activeTab: 'depository', items: response.books })),
+            catchError(err => of({ activeTab: 'depository', items: [] }))
+        );
+    }
+
+    private ebaySearch(searchTerm: string): Observable<{ activeTab: string, items: Array<any> }> {
+        return this.http.get<{ books: Array<any> }>('/api/book/ebay/search/' + searchTerm, { headers: this.headersObject }).pipe(
+            map(response => ({ activeTab: 'ebay', items: response.books })),
+            catchError(err => of({ activeTab: 'ebay', items: [] }))
+        );
+    }
+
+    private amazonSearch(searchTerm: string): Observable<{ activeTab: string, items: Array<any> }> {
+        return this.http.get<{ books: Array<any> }>('/api/book/amazon/search/' + searchTerm, { headers: this.headersObject }).pipe(
+            map(response => ({ activeTab: 'amazon', items: response.books })),
+            catchError(err => of({ activeTab: 'amazon', items: [] }))
         );
     }
 
     private get headersObject(): any {
         return {
             'Authorization': `Bearer ${JSON.parse(localStorage.getItem('google')).idToken}`,
-        }
+        };
     }
 }

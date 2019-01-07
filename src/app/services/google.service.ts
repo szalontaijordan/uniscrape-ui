@@ -57,15 +57,14 @@ export class GoogleService {
       await this.initAuth2();
     }
     const refreshPromise = await this.gapi.auth2.getAuthInstance().currentUser.get().reloadAuthResponse();
-    
+
     const currentGoogle = JSON.parse(localStorage.getItem('google'));
     const google = {
       ...currentGoogle,
       idToken: refreshPromise['id_token']
-    }
+    };
     localStorage.setItem('google', JSON.stringify(google));
 
-    await this.router.navigate(['home']);
     return google;
   }
 

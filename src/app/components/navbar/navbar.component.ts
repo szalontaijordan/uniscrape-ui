@@ -23,9 +23,13 @@ export class NavbarComponent implements OnInit {
     this.auth.subscribe({
       next: data => {
         if (window['gapi']['auth2']) {
-          this.validUntil = new Date(window['gapi'].auth2.getAuthInstance().currentUser.get().getAuthResponse().expires_at);
-        } else {
-          this.validUntil = null;
+          const newDate = new Date(window['gapi'].auth2.getAuthInstance().currentUser.get().getAuthResponse().expires_at);
+
+          if (newDate.getFullYear() === new Date().getFullYear()) {
+            this.validUntil = newDate;
+          } else {
+            this.validUntil = null;
+          }
         }
       }
     });

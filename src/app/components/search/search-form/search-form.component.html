@@ -1,0 +1,6 @@
+<form #searchForm="ngForm">
+  <div class="form-group">
+    <input type="text" name="search" id="search" [(ngModel)]="searchTerm" placeholder="Search for books at The Bookdepository, Ebay or Amazon" #search="ngModel" />
+    <button (click)="bookSearch.emit(searchTerm)"><i class="fas fa-search"></i></button>
+  </div>
+</form>

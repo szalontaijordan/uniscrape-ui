@@ -1,0 +1,28 @@
+<div class="search">
+  <div class="recent">
+    <span
+      *ngFor="let recentItem of (search | async).recent"
+      (click)="searchActions.updateSearchTerm(recentItem)" 
+      class="recent-item">{{ recentItem }}</span>
+  </div>
+  <app-search-form
+    [searchTerm]="(search | async).searchTerm"
+    (bookSearch)="searchActions.searchStart($event)"></app-search-form>
+  <div class="results">
+    <nav>
+      <ul>
+        <li
+          *ngFor="let site of (search | async).searchSites"
+          [ngClass]="{'active': (search | async).activeTab === site.name}"
+          (click)="searchActions.changeTab(site.name)">{{ site.title }}</li>
+      </ul>
+    </nav>
+    <div class="tab" *ngFor="let site of (search | async).searchSites">
+      <app-search-results-tab
+        *ngIf="(search | async).activeTab === site.name"
+        [items]="(search | async).results[site.name]"
+        [isLoading]="(search | async).isLoading"></app-search-results-tab>
+    </div>
+  </div>
+  <pre>{{ search | async | json }}</pre>
+</div>

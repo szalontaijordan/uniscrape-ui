@@ -3,6 +3,7 @@ import { GoogleProfile } from './types/google-profile.type';
 export interface AppState {
     auth: AuthState;
     home: HomeState;
+    search: SearchState;
 }
 
 export interface AuthState {
@@ -21,6 +22,20 @@ export interface HomeState {
     errorMessage?: string;
 }
 
+export interface SearchState {
+    searchTerm: string;
+    recent: Array<string>;
+    activeTab: string;
+    isLoading: boolean;
+    results: {
+        depository: Array<any>;
+        ebay: Array<any>;
+        amazon: Array<any>;
+    };
+    searchSites: Array<{ name: string, title: string }>;
+    errorMessage?: string;
+}
+
 export const DEFAULT_APP_STATE: AppState = {
     auth: {
         isLoggedIn: false,
@@ -31,5 +46,21 @@ export const DEFAULT_APP_STATE: AppState = {
         isLoading: false,
         bookSections: [],
         sectionNames: []
+    },
+    search: {
+        searchTerm: '',
+        recent: [],
+        activeTab: 'depository',
+        isLoading: false,
+        results: {
+            depository: [],
+            ebay: [],
+            amazon: []
+        },
+        searchSites: [
+            { name: 'depository', title: 'The Bookdepository' },
+            { name: 'ebay', title: 'Ebay' },
+            { name: 'amazon', title: 'Amazon' }
+        ]
     }
 };
