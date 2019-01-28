@@ -1,5 +1,9 @@
 <nav>
   <p>The token is valid until: <span *ngIf="validUntil !== null">{{ validUntil | date : 'HH:mm:ss' }}</span></p>
+  <ul>
+    <li><a routerLink="/home">Home</a></li>
+    <li><a routerLink="/search">Search</a></li>
+  </ul>
   <div *ngIf="(auth | async).isLoggedIn" class="profile">
     <div class="email">{{ (auth | async)?.currentUser.email }}</div>
     <div class="image"><img [src]="(auth | async)?.currentUser.imageUrl" alt="Profile picture" /></div>
