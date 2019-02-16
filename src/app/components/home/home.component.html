@@ -7,20 +7,7 @@
       <div class="carousel-wrapper">
         <ul *ngIf="(getBookItemsFor(name) | async).length; else placeholder" [attr.data-name]="name">
           <li *ngFor="let book of (getBookItemsFor(name) | async)">
-            <div class="image-wrapper">
-              <a [href]="'https://www.bookdepository.com' + book.linkToBook" target="_blank">
-                <img [src]="book.image" [alt]="book.title">
-              </a>
-            </div>
-            <h3>
-              <a [href]="'https://www.bookdepository.com' + book.linkToBook" target="_blank">
-                {{ book.title }}
-              </a>
-            </h3>
-            <div>ISBN: {{ book.ISBN }}</div>
-            <div *ngIf="book.author">Author: <a [href]="'https://www.bookdepository.com' + book.author.url" target="_blank">{{ book.author.name }}</a></div>
-            <div>Price: {{ book.currentPrice === -1 ? '-' : book.currentPrice }} Ft</div>
-            <div>Published: {{ book.published | date : 'yyyy.MM.dd.' }}</div>
+            <app-book-item [item]="book"></app-book-item>
           </li>
         </ul>
         <button class="prev" (click)="prev(name)"><i class="fas fa-chevron-left"></i></button>

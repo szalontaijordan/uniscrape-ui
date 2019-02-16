@@ -1,0 +1,12 @@
+.results {
+    display: flex;
+    padding: 16px;
+    flex-flow: row wrap;
+    justify-content: center;
+
+    .result {
+        flex: 0 0 250px;
+        margin-bottom: 8px;
+        margin-right: 8px;
+    }
+}

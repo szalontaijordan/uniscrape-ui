@@ -24,6 +24,7 @@ import { SearchFormComponent } from './components/search/search-form/search-form
 import { searchReducer } from './model/reducers/search.reducer';
 import { SearchEpics } from './model/epics/search.epic';
 import { SearchResultsTabComponent } from './components/search/search-results-tab/search-results-tab.component';
+import { BookItemComponent } from './components/book-item/book-item.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { SearchResultsTabComponent } from './components/search/search-results-ta
     NavbarComponent,
     SearchComponent,
     SearchFormComponent,
-    SearchResultsTabComponent
+    SearchResultsTabComponent,
+    BookItemComponent
   ],
   imports: [
     BrowserModule,
