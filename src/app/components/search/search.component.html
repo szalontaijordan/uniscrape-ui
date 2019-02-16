@@ -29,6 +29,7 @@
         [items]="(search | async).results[site.name]"
         [isLoading]="(search | async).isLoading"></app-search-results-tab>
     </div>
+    <div *ngIf="(search | async).isNextPageLoading">Loading...</div>
   </div>
   <pre style="overflow: hidden">{{ search | async | json }}</pre>
 </div>

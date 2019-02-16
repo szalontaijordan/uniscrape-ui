@@ -32,6 +32,7 @@ export interface SearchState {
         ebay: Array<any>;
         amazon: Array<any>;
     };
+    isNextPageLoading?: boolean;
     searchSites: Array<{ name: string, title: string }>;
     errorMessage?: string;
 }
@@ -52,6 +53,7 @@ export const DEFAULT_APP_STATE: AppState = {
         recent: [],
         activeTab: 'depository',
         isLoading: false,
+        isNextPageLoading: false,
         results: {
             depository: [],
             ebay: [],

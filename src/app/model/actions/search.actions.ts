@@ -21,6 +21,8 @@ export class SearchActions {
     static SEARCH_UPDATE_SEARCH_TERM = 'SEARCH_UPDATE_SEARCH_TERM';
     static SEARCH_CHANGE_TAB = 'SEARCH_CHANGE_TAB';
 
+    static LOAD_NEXT_PAGE = 'LOAD_NEXT_PAGE';
+
     searchStart(searchTerm: string, activeTab = 'depository'): void {
         this.ngRedux.dispatch({ type: SearchActions.SEARCH_START, payload: { searchTerm, activeTab } });
     }
@@ -35,5 +37,9 @@ export class SearchActions {
 
     changeTab(newTab: string): void {
         this.ngRedux.dispatch({ type: SearchActions.SEARCH_CHANGE_TAB, payload: newTab});
+    }
+
+    loadNextPage(page: number): void {
+        this.ngRedux.dispatch({ type: SearchActions.LOAD_NEXT_PAGE, payload: page });
     }
 }

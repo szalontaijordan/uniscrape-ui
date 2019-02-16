@@ -15,10 +15,16 @@ export const searchReducer: Reducer<SearchState> = (state: SearchState = DEFAULT
                 ...state,
                 isLoading: false,
                 activeTab: action.payload.activeTab,
+                isNextPageLoading: false,
                 results: {
                     ...state.results,
-                    [action.payload.activeTab]: action.payload.items
+                    [action.payload.activeTab]: [ ...state.results[action.payload.activeTab], ...action.payload.items ]
                 }
+            };
+        case SearchActions.LOAD_NEXT_PAGE:
+            return {
+                ...state,
+                isNextPageLoading: true
             };
         case SearchActions.SEARCH_FAILED:
             return {
