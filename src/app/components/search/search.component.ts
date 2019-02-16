@@ -20,4 +20,11 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
     this.searchActions.recentSearches();
   }
+
+  formatTerm(searchTerm: string): string {
+    if (Number(searchTerm)) {
+      return 'ISBN: ' + searchTerm;
+    }
+    return searchTerm;
+  }
 }
