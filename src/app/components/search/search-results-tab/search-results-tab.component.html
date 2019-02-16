@@ -1,4 +1,10 @@
-<pre *ngIf="isLoading">Loading...</pre>
-<pre *ngIf="!isLoading">
-  {{ items | json }}
-</pre>
+<div *ngIf="true; else loading" class="results">
+  <div class="result" *ngFor="let book of items">
+    <app-book-item [item]="book"></app-book-item>
+  </div>
+</div>
+<ng-template #loading>
+  <div class="placeholder" *ngFor="let placeholder of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+    <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  </div>
+</ng-template>
