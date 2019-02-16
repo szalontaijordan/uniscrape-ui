@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActionsObservable, ofType, Epic, StateObservable } from 'redux-observable';
-import { map, mergeMap, catchError, filter } from 'rxjs/operators';
-import { of, from } from 'rxjs';
+import { map, mergeMap, catchError, filter, debounce } from 'rxjs/operators';
+import { of, from, timer } from 'rxjs';
 import { BookService } from 'src/app/services/book.service';
 import { SearchActions } from '../actions/search.actions';
 import { SearchState } from '../state';
@@ -58,4 +58,18 @@ export class SearchEpics {
         ))
     )
 
+    loadNextPage = (action$: ActionsObservable<any>, state$) => action$.pipe(
+        ofType(SearchActions.LOAD_NEXT_PAGE),
+        debounce(() => timer(300)),
+        mergeMap(action => this.bookService.search(state$.value.search.searchTerm, state$.value.search.activeTab, action.payload).pipe(
+            map(payload => ({
+                type: SearchActions.SEARCH_SUCCEEDED,
+                payload
+            })),
+            catchError(payload => of({
+                type: SearchActions.SEARCH_FAILED,
+                payload
+            }))
+        ))
+    )
 }

@@ -23,41 +23,44 @@ export class BookService {
         );
     }
 
-    search(searchTerm: string, activeTab: string): Observable<{ activeTab: string, items: Array<any> }> {
+    search(searchTerm: string, activeTab: string, page: number = 1): Observable<{ activeTab: string, items: Array<any> }> {
         switch (activeTab) {
             case 'depository':
-                return this.depositorySearch(searchTerm);
+                return this.depositorySearch(searchTerm, page);
             case 'ebay':
-                return this.ebaySearch(searchTerm);
+                return this.ebaySearch(searchTerm, page);
             case 'amazon':
-                return this.amazonSearch(searchTerm);
+                return this.amazonSearch(searchTerm, page);
             default:
                 return of({ activeTab, items: [] });
         }
     }
 
     getRecentSearches(): Observable<Array<string>> {
-        return this.http.get<{ recentSearches: Array<string> }>('/api/book/all/recent', { headers: this.headersObject }).pipe(
+        return this.http.get<{ recentSearches: Array<string> }>('/api/book/all/searchHistory', { headers: this.headersObject }).pipe(
             map(response => response.recentSearches)
         );
     }
 
-    private depositorySearch(searchTerm: string): Observable<{ activeTab: string, items: Array<any> }> {
-        return this.http.get<{ books: Array<any> }>('/api/book/depository/search/' + searchTerm, { headers: this.headersObject }).pipe(
+    private depositorySearch(searchTerm: string, page: number): Observable<{ activeTab: string, items: Array<any> }> {
+        const URL = '/api/book/depository/search/' + searchTerm + '/' + page;
+        return this.http.get<{ books: Array<any> }>(URL, { headers: this.headersObject }).pipe(
             map(response => ({ activeTab: 'depository', items: response.books })),
             catchError(err => of({ activeTab: 'depository', items: [] }))
         );
     }
 
-    private ebaySearch(searchTerm: string): Observable<{ activeTab: string, items: Array<any> }> {
-        return this.http.get<{ books: Array<any> }>('/api/book/ebay/search/' + searchTerm, { headers: this.headersObject }).pipe(
+    private ebaySearch(searchTerm: string, page: number): Observable<{ activeTab: string, items: Array<any> }> {
+        const URL = '/api/book/ebay/search/' + searchTerm + '/' + page;
+        return this.http.get<{ books: Array<any> }>(URL, { headers: this.headersObject }).pipe(
             map(response => ({ activeTab: 'ebay', items: response.books })),
             catchError(err => of({ activeTab: 'ebay', items: [] }))
         );
     }
 
-    private amazonSearch(searchTerm: string): Observable<{ activeTab: string, items: Array<any> }> {
-        return this.http.get<{ books: Array<any> }>('/api/book/amazon/search/' + searchTerm, { headers: this.headersObject }).pipe(
+    private amazonSearch(searchTerm: string, page: number): Observable<{ activeTab: string, items: Array<any> }> {
+        const URL = '/api/book/amazon/search/' + searchTerm + '/' + page;
+        return this.http.get<{ books: Array<any> }>(URL, { headers: this.headersObject }).pipe(
             map(response => ({ activeTab: 'amazon', items: response.books })),
             catchError(err => of({ activeTab: 'amazon', items: [] }))
         );

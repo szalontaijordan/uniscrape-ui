@@ -2,8 +2,11 @@
   <div class="recent" *ngIf="(search | async).recent.length; else noRecent">
     <span
       *ngFor="let recentItem of (search | async).recent"
-      (click)="searchActions.updateSearchTerm(recentItem)" 
-      class="recent-item">{{ recentItem }}</span>
+      (click)="searchActions.updateSearchTerm(recentItem.term)" 
+      [attr.data-term]="recentItem.term"
+      class="recent-item">
+      {{ formatTerm(recentItem.term) }} ({{ recentItem.date | date: 'yyyy.MM.dd' }})
+    </span>
   </div>
   <ng-template #noRecent>
     <div class="recent">Your recent searches will appear here.</div>
@@ -26,6 +29,7 @@
         [items]="(search | async).results[site.name]"
         [isLoading]="(search | async).isLoading"></app-search-results-tab>
     </div>
+    <div *ngIf="(search | async).isNextPageLoading">Loading...</div>
   </div>
   <pre style="overflow: hidden">{{ search | async | json }}</pre>
 </div>

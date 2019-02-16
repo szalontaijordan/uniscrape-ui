@@ -1,4 +1,12 @@
 <div class="book-item">
+  <button class="wishlist">
+    <span *ngIf="item.isOnWishlist; else bookmarkFull">
+      <i class="fas fa-bookmark"></i>
+    </span>
+    <ng-template #bookmarkFull>
+      <span><i class="far fa-bookmark"></i></span>
+    </ng-template>
+  </button>
   <a class="itemURL" [href]="itemURL">
     <div class="img-wrapper">
       <img [src]="item.image" [alt]="item.title" />

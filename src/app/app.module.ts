@@ -74,7 +74,8 @@ export class AppModule {
       this.bookEpics.fetchSection,
       this.searchEpics.search,
       this.searchEpics.recent,
-      this.searchEpics.loadTabIfEmpty
+      this.searchEpics.loadTabIfEmpty,
+      this.searchEpics.loadNextPage
     ));
   }
 
