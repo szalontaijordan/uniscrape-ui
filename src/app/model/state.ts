@@ -4,6 +4,7 @@ export interface AppState {
     auth: AuthState;
     home: HomeState;
     search: SearchState;
+    wishlist: WishlistState;
 }
 
 export interface AuthState {
@@ -37,6 +38,11 @@ export interface SearchState {
     errorMessage?: string;
 }
 
+export interface WishlistState {
+    isLoading: boolean;
+    items: Array<any>;
+}
+
 export const DEFAULT_APP_STATE: AppState = {
     auth: {
         isLoggedIn: false,
@@ -64,5 +70,9 @@ export const DEFAULT_APP_STATE: AppState = {
             { name: 'ebay', title: 'Ebay' },
             { name: 'amazon', title: 'Amazon' }
         ]
+    },
+    wishlist: {
+        isLoading: false,
+        items: []
     }
 };
