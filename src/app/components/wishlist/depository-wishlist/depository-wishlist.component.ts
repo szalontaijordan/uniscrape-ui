@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { AuthActions } from 'src/app/model/actions/auth.actions';
 
 @Component({
   selector: 'app-depository-wishlist',
@@ -17,10 +18,13 @@ export class DepositoryWishlistComponent implements OnInit {
   };
   isShowPassword = false;
 
-  constructor(public ngxSmartModalService: NgxSmartModalService) {
+  constructor(public ngxSmartModalService: NgxSmartModalService, private authActions: AuthActions) {
   }
 
   ngOnInit() {
   }
 
+  signIn(): void {
+    this.authActions.depositoryLogin(this.model);
+  }
 }

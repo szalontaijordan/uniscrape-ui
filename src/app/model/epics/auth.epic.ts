@@ -4,13 +4,14 @@ import { ActionsObservable, ofType, Epic } from 'redux-observable';
 import { AuthActions } from '../actions/auth.actions';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { of, from } from 'rxjs';
+import { BookService } from 'src/app/services/book.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthEpics {
 
-    constructor(private googleService: GoogleService) {
+    constructor(private googleService: GoogleService, private bookService: BookService) {
     }
 
     login = (action$: ActionsObservable<any>) => action$.pipe(
@@ -50,4 +51,17 @@ export class AuthEpics {
         ))
     )
 
+    depositoryLogin = (action$: ActionsObservable<any>) => action$.pipe(
+        ofType(AuthActions.DEPOSITORY_LOGIN),
+        mergeMap(action => from(this.bookService.depositoryLogin(action.payload)).pipe(
+            map(payload => ({
+                type: AuthActions.DEPOSITORY_LOGIN_SUCCEDED,
+                payload
+            })),
+            catchError(payload => of({
+                type: AuthActions.DEPOSITORY_LOGIN_FAILED,
+                payload
+            }))
+        ))
+    )
 }

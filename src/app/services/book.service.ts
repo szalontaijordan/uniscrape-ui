@@ -43,6 +43,10 @@ export class BookService {
         );
     }
 
+    depositoryLogin(credentials: { email: string, password: string}): Observable<any> {
+        return this.http.post('/api/book/depository/auth/login', { ...credentials }, { headers: this.google.headersObject });
+    }
+
     private depositorySearch(searchTerm: string, page: number): Observable<{ activeTab: string, items: Array<any> }> {
         const URL = '/api/book/depository/search/' + searchTerm + '/' + page;
         return this.http.get<{ books: Array<any> }>(URL, { headers: this.google.headersObject }).pipe(

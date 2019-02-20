@@ -80,6 +80,7 @@ export class AppModule {
       this.authEpics.login,
       this.authEpics.logout,
       this.authEpics.refresh,
+      this.authEpics.depositoryLogin,
       this.bookEpics.fetchSectionNames,
       this.bookEpics.fetchSection,
       this.searchEpics.search,

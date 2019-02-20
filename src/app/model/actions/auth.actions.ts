@@ -20,6 +20,10 @@ export class AuthActions {
   static AUTH_LOGOUT = 'AUTH_LOGOUT';
   static AUTH_LOGOUT_SUCCEEDED = 'AUTH_LOGOUT_SUCCEEDED';
 
+  static DEPOSITORY_LOGIN = 'DEPOSITORY_LOGIN';
+  static DEPOSITORY_LOGIN_SUCCEDED = 'DEPOSITORY_LOGIN_SUCCEDED';
+  static DEPOSITORY_LOGIN_FAILED = 'DEPOSITORY_LOGIN_FAILED';
+
   login(stayLoggedIn = false): void {
     this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGIN_STARTED, payload: stayLoggedIn });
   }
@@ -34,5 +38,9 @@ export class AuthActions {
 
   logout(): void {
     this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGOUT });
+  }
+
+  depositoryLogin(credentials: { email: string, password: string }): void {
+    this.ngRedux.dispatch({ type: AuthActions.DEPOSITORY_LOGIN, payload: credentials });
   }
 }
