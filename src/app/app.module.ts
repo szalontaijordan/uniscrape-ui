@@ -28,6 +28,8 @@ import { BookItemComponent } from './components/book-item/book-item.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { wishlistReducer } from './model/reducers/wishlist.reducer';
 import { WishlistEpics } from './model/epics/wishlist.epic';
+import { DepositoryWishlistComponent } from './components/wishlist/depository-wishlist/depository-wishlist.component';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 @NgModule({
   declarations: [
@@ -39,14 +41,16 @@ import { WishlistEpics } from './model/epics/wishlist.epic';
     SearchFormComponent,
     SearchResultsTabComponent,
     BookItemComponent,
-    WishlistComponent
+    WishlistComponent,
+    DepositoryWishlistComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgReduxModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxSmartModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

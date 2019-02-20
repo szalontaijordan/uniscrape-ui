@@ -1,0 +1,45 @@
+<div class="depository-wishlist">
+  <button *ngIf="!isLoggedInToBookDepository" (click)="ngxSmartModalService.getModal('depositoryLogin').open()">Bejelentkezés ide: Book Depository</button>
+  <ngx-smart-modal #depositoryLogin identifier="depositoryLogin">
+    <h1>Bejelentkezés</h1>
+    <form #depositoryLoginForm="ngForm">
+      <div class="form-group">
+        <input
+          placeholder="Email"
+          type="email"
+          required
+          class="form-control"
+          [(ngModel)]="model.email"
+          name="email"
+          id="email"
+          #email="ngModel" />
+      </div>
+      <div class="form-group">
+        <input
+          placeholder="Book Depository jelszó"
+          [type]="isShowPassword ? 'text' : 'password'"
+          required
+          class="form-control"
+          [(ngModel)]="model.password"
+          name="password"
+          id="password"
+          #password="ngModel" />
+      </div>
+      <div class="form-group">
+        <label class="container">
+            <span class="lead-text">Jelszó mutatása</span>
+            <input
+              type="checkbox"
+              name="showpassword"
+              id="showpassword"
+              [(ngModel)]="isShowPassword"
+              [ngModelOptions]="{standalone: true}"/>
+            <span class="checkmark"></span>
+        </label>
+      </div>
+      <div class="form-group">
+        <button [disabled]="!depositoryLoginForm.valid" (click)="signIn()">Bejelentkezés</button>
+      </div>
+    </form>
+  </ngx-smart-modal>
+</div>

@@ -41,6 +41,7 @@ export interface SearchState {
 export interface WishlistState {
     isLoading: boolean;
     items: Array<any>;
+    isLoggedInToBookDepository: boolean;
 }
 
 export const DEFAULT_APP_STATE: AppState = {
@@ -73,6 +74,7 @@ export const DEFAULT_APP_STATE: AppState = {
     },
     wishlist: {
         isLoading: true,
+        isLoggedInToBookDepository: false,
         items: null
     }
 };
