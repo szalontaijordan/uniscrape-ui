@@ -78,6 +78,12 @@ export class GoogleService {
     return of({ name, imageUrl, email});
   }
 
+  public get headersObject(): any {
+      return {
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem('google')).idToken}`,
+      };
+  }
+
   private initAuth2(): Promise<void> {
     return new Promise(resolve => this.gapi.load('auth2', () => {
       this.gapi.auth2.init({

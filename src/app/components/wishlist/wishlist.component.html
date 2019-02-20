@@ -1,0 +1,10 @@
+<div class="wishlist">
+  <h1>Wishlist</h1>
+  <span *ngIf="(wishlist | async).isLoading">Loading...</span>
+  <div *ngIf="(wishlist | async)?.items?.length === 0">A kívánságlista üres</div>
+  <div class="items">
+    <div *ngFor="let book of (wishlist | async).items" class="item">
+      <app-book-item [item]="book"></app-book-item>
+    </div>
+  </div>
+</div>

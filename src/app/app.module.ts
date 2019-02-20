@@ -25,6 +25,9 @@ import { searchReducer } from './model/reducers/search.reducer';
 import { SearchEpics } from './model/epics/search.epic';
 import { SearchResultsTabComponent } from './components/search/search-results-tab/search-results-tab.component';
 import { BookItemComponent } from './components/book-item/book-item.component';
+import { WishlistComponent } from './components/wishlist/wishlist.component';
+import { wishlistReducer } from './model/reducers/wishlist.reducer';
+import { WishlistEpics } from './model/epics/wishlist.epic';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,8 @@ import { BookItemComponent } from './components/book-item/book-item.component';
     SearchComponent,
     SearchFormComponent,
     SearchResultsTabComponent,
-    BookItemComponent
+    BookItemComponent,
+    WishlistComponent
   ],
   imports: [
     BrowserModule,
@@ -52,13 +56,15 @@ export class AppModule {
   constructor(private ngRedux: NgRedux<AppState>,
               private authEpics: AuthEpics,
               private bookEpics: BookEpics,
-              private searchEpics: SearchEpics) {
+              private searchEpics: SearchEpics,
+              private wishlistEpics: WishlistEpics) {
     const epicMiddleware = createEpicMiddleware();
 
     const reducers = {
       auth: authReducer,
       home: bookReducer,
-      search: searchReducer
+      search: searchReducer,
+      wishlist: wishlistReducer
     };
 
     this.ngRedux.configureStore(combineReducers(reducers), DEFAULT_APP_STATE, [
@@ -75,7 +81,10 @@ export class AppModule {
       this.searchEpics.search,
       this.searchEpics.recent,
       this.searchEpics.loadTabIfEmpty,
-      this.searchEpics.loadNextPage
+      this.searchEpics.loadNextPage,
+      this.wishlistEpics.fetchWishlist,
+      this.wishlistEpics.addItemToWishlist,
+      this.wishlistEpics.removeItemFromWishlist
     ));
   }
 

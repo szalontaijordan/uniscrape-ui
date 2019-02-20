@@ -1,6 +1,6 @@
 <div class="book-item">
-  <button class="wishlist">
-    <span *ngIf="item.isOnWishlist; else bookmarkFull">
+  <button (click)="toggleWishlist()" class="wishlist">
+    <span *ngIf="item?.isOnWishlist; else bookmarkFull">
       <i class="fas fa-bookmark"></i>
     </span>
     <ng-template #bookmarkFull>
