@@ -1,0 +1,11 @@
+.wishlist .items {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+
+    .item {
+        flex: 0 0 200px;
+        margin-bottom: 8px;
+        margin-right: 8px;
+    }
+}

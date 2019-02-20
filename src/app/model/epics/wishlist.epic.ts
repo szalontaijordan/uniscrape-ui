@@ -44,9 +44,9 @@ export class WishlistEpics {
     removeItemFromWishlist = (action$: ActionsObservable<any>) => action$.pipe(
         ofType(WishlistActions.REMOVE_FROM_WISHLIST),
         mergeMap(action => this.wishlistService.removeItemFromWishlist(action.payload).pipe(
-            map(payload => ({
-                type: WishlistActions.UPDATE_WISHLIST_SUCCEEDED,
-                payload
+            map(() => ({
+                type: WishlistActions.REMOVE_FROM_WISHLIST_SUCCEEDED,
+                payload: action.payload
             })),
             catchError(payload => of({
                 type: WishlistActions.UPDATE_WISHLIST_SUCCEEDED,

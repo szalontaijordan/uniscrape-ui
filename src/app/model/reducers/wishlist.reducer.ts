@@ -25,6 +25,18 @@ export const wishlistReducer: Reducer<WishlistState> = (state: WishlistState = D
                 items: action.payload
             };
         }
+        case WishlistActions.UPDATE_WISHLIST_SUCCEEDED: {
+            return {
+                ...state,
+                items: [...state.items, action.payload]
+            };
+        }
+        case WishlistActions.REMOVE_FROM_WISHLIST_SUCCEEDED: {
+            return {
+                ...state,
+                items: state.items.filter(item => item.ISBN != action.payload.ISBN)
+            };
+        }
         default: {
             return {
                 ...state

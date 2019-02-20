@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
 import { AppState } from '../state';
+import { GoogleAuthObject } from '../types/google-profile.type';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,15 @@ export class AuthActions {
     this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGIN_STARTED, payload: stayLoggedIn });
   }
 
-  logout(): void {
-    this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGOUT });
+  loginSucceeded(google: GoogleAuthObject): void {
+    this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGIN_SUCCEEDED, payload: google });
   }
 
-  refresh(): void {
-    this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGIN_REFRESH });
+  loginRefresh(google: GoogleAuthObject): void {
+    this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGIN_REFRESH, payload: google });
+  }
+
+  logout(): void {
+    this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGOUT });
   }
 }

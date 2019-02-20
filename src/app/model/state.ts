@@ -72,7 +72,7 @@ export const DEFAULT_APP_STATE: AppState = {
         ]
     },
     wishlist: {
-        isLoading: false,
-        items: []
+        isLoading: true,
+        items: null
     }
 };
