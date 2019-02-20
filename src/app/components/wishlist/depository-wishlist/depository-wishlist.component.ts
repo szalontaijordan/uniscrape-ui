@@ -12,13 +12,16 @@ export class DepositoryWishlistComponent implements OnInit {
   @Input()
   isLoggedInToBookDepository: boolean;
 
+  @Input()
+  isBookDepositoryLoginLoading: boolean;
+
   model = {
     email: '',
     password: ''
   };
   isShowPassword = false;
 
-  constructor(public ngxSmartModalService: NgxSmartModalService, private authActions: AuthActions) {
+  constructor(public ngxSmartModalService: NgxSmartModalService, public authActions: AuthActions) {
   }
 
   ngOnInit() {

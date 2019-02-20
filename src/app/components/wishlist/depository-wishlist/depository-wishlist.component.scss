@@ -2,6 +2,16 @@ h1 {
     margin-bottom: 32px;
 }
 
+.loading {
+    position: absolute;
+    top: -16px;
+    bottom: -16px;
+    left: -16px;
+    right: -16px;
+    z-index: 1;
+    background: rgba(200, 200, 200, 0.2);
+}
+
 .form-group:nth-of-type(1) {
     margin-top: 0;
     border-top-color: #ccc;

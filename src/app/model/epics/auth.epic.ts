@@ -5,13 +5,14 @@ import { AuthActions } from '../actions/auth.actions';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { of, from } from 'rxjs';
 import { BookService } from 'src/app/services/book.service';
+import { WishlistActions } from '../actions/wishlist.actions';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthEpics {
 
-    constructor(private googleService: GoogleService, private bookService: BookService) {
+    constructor(private googleService: GoogleService, private bookService: BookService, private wishlist: WishlistActions) {
     }
 
     login = (action$: ActionsObservable<any>) => action$.pipe(
@@ -54,10 +55,30 @@ export class AuthEpics {
     depositoryLogin = (action$: ActionsObservable<any>) => action$.pipe(
         ofType(AuthActions.DEPOSITORY_LOGIN),
         mergeMap(action => from(this.bookService.depositoryLogin(action.payload)).pipe(
-            map(payload => ({
-                type: AuthActions.DEPOSITORY_LOGIN_SUCCEDED,
+            map(payload => {
+                this.wishlist.hideDepositoryLogin();
+                return {
+                    type: AuthActions.DEPOSITORY_LOGIN_SUCCEDED,
+                    payload
+                };
+            }),
+            catchError(payload => of({
+                type: AuthActions.DEPOSITORY_LOGIN_FAILED,
                 payload
-            })),
+            }))
+        ))
+    )
+
+    depositoryLogout = (action$: ActionsObservable<any>) => action$.pipe(
+        ofType(AuthActions.DEPOSITOR_LOGOUT),
+        mergeMap(action => from(this.bookService.depositoryLogout()).pipe(
+            map(payload => {
+                this.wishlist.showDepositoryLogin();
+                return {
+                    type: AuthActions.DEPOSITOR_LOGOUT_SUCCEEDED,
+                    payload
+                };
+            }),
             catchError(payload => of({
                 type: AuthActions.DEPOSITORY_LOGIN_FAILED,
                 payload

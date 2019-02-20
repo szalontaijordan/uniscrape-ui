@@ -14,6 +14,7 @@ export interface AuthState {
     errorMessage?: string;
     currentUser?: GoogleProfile;
     userIdToken?: string;
+    isBookDepositoryLoginLoading: boolean;
 }
 
 export interface HomeState {
@@ -48,6 +49,7 @@ export const DEFAULT_APP_STATE: AppState = {
     auth: {
         isLoggedIn: false,
         isLoading: false,
+        isBookDepositoryLoginLoading: false,
         stayLoggedIn: false
     },
     home: {

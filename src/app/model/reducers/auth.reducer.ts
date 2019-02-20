@@ -32,6 +32,17 @@ export const authReducer: Reducer<AuthState> = (state: AuthState = DEFAULT_APP_S
                 userIdToken: '',
                 currentUser: null
             };
+        case AuthActions.DEPOSITORY_LOGIN:
+            return {
+                ...state,
+                isBookDepositoryLoginLoading: true
+            };
+        case AuthActions.DEPOSITORY_LOGIN_SUCCEDED:
+        case AuthActions.DEPOSITORY_LOGIN_FAILED:
+            return {
+                ...state,
+                isBookDepositoryLoginLoading: false
+            };
         default:
             return {
                 ...state

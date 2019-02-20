@@ -34,7 +34,19 @@ export const wishlistReducer: Reducer<WishlistState> = (state: WishlistState = D
         case WishlistActions.REMOVE_FROM_WISHLIST_SUCCEEDED: {
             return {
                 ...state,
-                items: state.items.filter(item => item.ISBN != action.payload.ISBN)
+                items: state.items.filter(item => item.ISBN !== action.payload.ISBN)
+            };
+        }
+        case WishlistActions.HIDE_DEPOSITORY_LOGIN: {
+            return {
+                ...state,
+                isLoggedInToBookDepository: true
+            };
+        }
+        case WishlistActions.SHOW_DEPOSITORY_LOGIN: {
+            return {
+                ...state,
+                isLoggedInToBookDepository: false
             };
         }
         default: {
