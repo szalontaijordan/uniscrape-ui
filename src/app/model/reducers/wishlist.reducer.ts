@@ -49,6 +49,34 @@ export const wishlistReducer: Reducer<WishlistState> = (state: WishlistState = D
                 isLoggedInToBookDepository: false
             };
         }
+        case WishlistActions.FETCH_DEPOSITORY_WISHLIST: {
+            return {
+                ...state,
+                depositoryWishlist: {
+                    ...state.depositoryWishlist,
+                    isLoading: true
+                }
+            };
+        }
+        case WishlistActions.FETCH_DEPOSITORY_WISHLIST_SUCCEEDED: {
+            return {
+                ...state,
+                depositoryWishlist: {
+                    isLoading: false,
+                    items: action.payload,
+                    error: ''
+                }
+            };
+        }
+        case WishlistActions.FETCH_DEPOSITORY_WISHLIST_FAILED: {
+            return {
+                ...state,
+                depositoryWishlist: {
+                    error: action.payload.message,
+                    ...state.depositoryWishlist
+                }
+            };
+        }
         default: {
             return {
                 ...state

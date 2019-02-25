@@ -53,4 +53,10 @@
       <button (click)="authActions.depositoryLogout()">Kijelentkezés</button>
     </div>
   </ng-template>
+  <div class="items">
+    <div *ngIf="!items?.length">A Book Depository kívánság lista üres</div>
+    <div class="item" *ngFor="let book of items">
+      <app-book-item [item]="book"></app-book-item>
+    </div>
+  </div>
 </div>

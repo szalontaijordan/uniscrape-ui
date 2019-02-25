@@ -25,4 +25,10 @@ export class WishlistService {
   public removeItemFromWishlist(bookItem: any): Observable<any> {
     return this.http.delete('/api/internal/wishlist/' + bookItem.ISBN, { headers: this.google.headersObject });
   }
+
+  public fetchDepositoryWishlist(): Observable<any> {
+    return this.http.get<any & { books: Array<any> }>('/api/book/depository/wishlist', { headers: this.google.headersObject }).pipe(
+      map(wishlist => wishlist.books)
+    );
+  }
 }

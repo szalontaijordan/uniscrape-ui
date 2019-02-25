@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { AuthActions } from 'src/app/model/actions/auth.actions';
+import { select } from '@angular-redux/store';
 
 @Component({
   selector: 'app-depository-wishlist',
@@ -14,6 +15,9 @@ export class DepositoryWishlistComponent implements OnInit {
 
   @Input()
   isBookDepositoryLoginLoading: boolean;
+
+  @Input()
+  items: Array<any>;
 
   model = {
     email: '',

@@ -90,7 +90,8 @@ export class AppModule {
       this.searchEpics.loadNextPage,
       this.wishlistEpics.fetchWishlist,
       this.wishlistEpics.addItemToWishlist,
-      this.wishlistEpics.removeItemFromWishlist
+      this.wishlistEpics.removeItemFromWishlist,
+      this.wishlistEpics.fetchDepositoryWishlist
     ));
   }
 

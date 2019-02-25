@@ -57,6 +57,7 @@ export class AuthEpics {
         mergeMap(action => from(this.bookService.depositoryLogin(action.payload)).pipe(
             map(payload => {
                 this.wishlist.hideDepositoryLogin();
+                this.wishlist.fetchDepositoryWishlist();
                 return {
                     type: AuthActions.DEPOSITORY_LOGIN_SUCCEDED,
                     payload
