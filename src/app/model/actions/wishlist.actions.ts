@@ -18,6 +18,13 @@ export class WishlistActions {
     static UPDATE_WISHLIST_FAILED = 'UPDATE_WISHLIST_FAILED';
     static FETCH_WISHLIST_FAILED = 'FETCH_WISHLIST_FAILED';
 
+    static HIDE_DEPOSITORY_LOGIN = 'HIDE_DEPOSITORY_LOGIN';
+    static SHOW_DEPOSITORY_LOGIN = 'SHOW_DEPOSITORY_LOGIN';
+
+    static FETCH_DEPOSITORY_WISHLIST = 'FETCH_DEPOSITORY_WISHLIST';
+    static FETCH_DEPOSITORY_WISHLIST_SUCCEEDED = 'FETCH_DEPOSITORY_WISHLIST_SUCCEEDED';
+    static FETCH_DEPOSITORY_WISHLIST_FAILED = 'FETCH_DEPOSITORY_WISHLIST_FAILED';
+
     constructor(private ngRedux: NgRedux<AppState>) {
     }
 
@@ -31,5 +38,17 @@ export class WishlistActions {
 
     removeItemFromWishlist(bookItem: any): void {
         this.ngRedux.dispatch({ type: WishlistActions.REMOVE_FROM_WISHLIST, payload: bookItem });
+    }
+
+    hideDepositoryLogin(): void {
+        this.ngRedux.dispatch({ type: WishlistActions.HIDE_DEPOSITORY_LOGIN });
+    }
+
+    showDepositoryLogin(): void {
+        this.ngRedux.dispatch({ type: WishlistActions.SHOW_DEPOSITORY_LOGIN });
+    }
+
+    fetchDepositoryWishlist(): void {
+        this.ngRedux.dispatch({ type: WishlistActions.FETCH_DEPOSITORY_WISHLIST });
     }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { WishlistState } from 'src/app/model/state';
+import { WishlistState, AuthState } from 'src/app/model/state';
 import { select } from '@angular-redux/store';
+import { AuthActions } from 'src/app/model/actions/auth.actions';
 
 @Component({
   selector: 'app-wishlist',
@@ -10,12 +11,17 @@ import { select } from '@angular-redux/store';
 })
 export class WishlistComponent implements OnInit {
 
-  @select() wishlist: Observable<WishlistState>;
+  @select()
+  wishlist: Observable<WishlistState>;
 
-  constructor() {
+  @select()
+  auth: Observable<AuthState>;
+
+  constructor(private authActions: AuthActions) {
   }
 
   ngOnInit() {
+    this.authActions.depositoryCheckAuth();
   }
 
 }

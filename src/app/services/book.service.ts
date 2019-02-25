@@ -25,16 +25,11 @@ export class BookService {
     }
 
     search(searchTerm: string, activeTab: string, page: number = 1): Observable<{ activeTab: string, items: Array<any> }> {
-        switch (activeTab) {
-            case 'depository':
-                return this.depositorySearch(searchTerm, page);
-            case 'ebay':
-                return this.ebaySearch(searchTerm, page);
-            case 'amazon':
-                return this.amazonSearch(searchTerm, page);
-            default:
-                return of({ activeTab, items: [] });
-        }
+        const URL = `/api/book/${activeTab}/search/${searchTerm}/${page}`;
+        return this.http.get<{ books: Array<any> }>(URL, { headers: this.google.headersObject }).pipe(
+            map(response => ({ activeTab, items: response.books })),
+            catchError(err => of({ activeTab, items: [] }))
+        );
     }
 
     getRecentSearches(): Observable<Array<string>> {
@@ -43,27 +38,17 @@ export class BookService {
         );
     }
 
-    private depositorySearch(searchTerm: string, page: number): Observable<{ activeTab: string, items: Array<any> }> {
-        const URL = '/api/book/depository/search/' + searchTerm + '/' + page;
-        return this.http.get<{ books: Array<any> }>(URL, { headers: this.google.headersObject }).pipe(
-            map(response => ({ activeTab: 'depository', items: response.books })),
-            catchError(err => of({ activeTab: 'depository', items: [] }))
-        );
+    depositoryLogin(credentials: { email: string, password: string}): Observable<any> {
+        return this.http.post('/api/book/depository/auth/login', { ...credentials }, { headers: this.google.headersObject });
     }
 
-    private ebaySearch(searchTerm: string, page: number): Observable<{ activeTab: string, items: Array<any> }> {
-        const URL = '/api/book/ebay/search/' + searchTerm + '/' + page;
-        return this.http.get<{ books: Array<any> }>(URL, { headers: this.google.headersObject }).pipe(
-            map(response => ({ activeTab: 'ebay', items: response.books })),
-            catchError(err => of({ activeTab: 'ebay', items: [] }))
-        );
+    depositoryLogout(): Observable<any> {
+        return this.http.post('/api/book/depository/auth/logout', {}, { headers: this.google.headersObject });
     }
 
-    private amazonSearch(searchTerm: string, page: number): Observable<{ activeTab: string, items: Array<any> }> {
-        const URL = '/api/book/amazon/search/' + searchTerm + '/' + page;
-        return this.http.get<{ books: Array<any> }>(URL, { headers: this.google.headersObject }).pipe(
-            map(response => ({ activeTab: 'amazon', items: response.books })),
-            catchError(err => of({ activeTab: 'amazon', items: [] }))
+    checkDepositoryAuth(): Observable<boolean> {
+        return this.http.get<any & { message: string }>('/api/book/depository/auth', { headers: this.google.headersObject }).pipe(
+            map(response => Boolean(response.message))
         );
     }
 }

@@ -1,5 +1,11 @@
 <div class="wishlist">
   <h1>Wishlist</h1>
+  <h2>Book Depository Wishlist</h2>
+  <app-depository-wishlist
+    [isLoggedInToBookDepository]="(wishlist | async).isLoggedInToBookDepository"
+    [isBookDepositoryLoginLoading]="(auth | async).isBookDepositoryLoginLoading"
+    [items]="(wishlist | async).depositoryWishlist.items"></app-depository-wishlist>
+  <h2>Uniscrape Wishlist</h2>
   <span *ngIf="(wishlist | async).isLoading">Loading...</span>
   <div *ngIf="(wishlist | async)?.items?.length === 0">A kívánságlista üres</div>
   <div class="items">

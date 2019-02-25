@@ -34,7 +34,47 @@ export const wishlistReducer: Reducer<WishlistState> = (state: WishlistState = D
         case WishlistActions.REMOVE_FROM_WISHLIST_SUCCEEDED: {
             return {
                 ...state,
-                items: state.items.filter(item => item.ISBN != action.payload.ISBN)
+                items: state.items.filter(item => item.ISBN !== action.payload.ISBN)
+            };
+        }
+        case WishlistActions.HIDE_DEPOSITORY_LOGIN: {
+            return {
+                ...state,
+                isLoggedInToBookDepository: true
+            };
+        }
+        case WishlistActions.SHOW_DEPOSITORY_LOGIN: {
+            return {
+                ...state,
+                isLoggedInToBookDepository: false
+            };
+        }
+        case WishlistActions.FETCH_DEPOSITORY_WISHLIST: {
+            return {
+                ...state,
+                depositoryWishlist: {
+                    ...state.depositoryWishlist,
+                    isLoading: true
+                }
+            };
+        }
+        case WishlistActions.FETCH_DEPOSITORY_WISHLIST_SUCCEEDED: {
+            return {
+                ...state,
+                depositoryWishlist: {
+                    isLoading: false,
+                    items: action.payload,
+                    error: ''
+                }
+            };
+        }
+        case WishlistActions.FETCH_DEPOSITORY_WISHLIST_FAILED: {
+            return {
+                ...state,
+                depositoryWishlist: {
+                    error: action.payload.message,
+                    ...state.depositoryWishlist
+                }
             };
         }
         default: {

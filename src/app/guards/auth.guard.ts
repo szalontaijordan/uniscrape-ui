@@ -16,6 +16,8 @@ export class AuthGuard implements CanActivate {
 
   @select() wishlist: Observable<WishlistState>;
 
+  private interval: number;
+
   constructor(private ngRedux: NgRedux<AppState>,
               private router: Router,
               private authService: AuthService,
@@ -49,10 +51,14 @@ export class AuthGuard implements CanActivate {
               this.authActions.loginSucceeded(google);
             }
 
-            this.authActions.loginRefresh(google);
+            if (!this.interval) {
+              // every 50 mins refresh the token
+              this.interval = window.setInterval(() => this.authActions.loginRefresh(google), 3000000);
+            }
             return true;
           }
 
+          window.clearInterval(this.interval);
           this.authActions.logout();
           this.router.navigate(['login']);
           return false;

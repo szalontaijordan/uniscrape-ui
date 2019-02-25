@@ -14,6 +14,7 @@ export interface AuthState {
     errorMessage?: string;
     currentUser?: GoogleProfile;
     userIdToken?: string;
+    isBookDepositoryLoginLoading: boolean;
 }
 
 export interface HomeState {
@@ -41,12 +42,19 @@ export interface SearchState {
 export interface WishlistState {
     isLoading: boolean;
     items: Array<any>;
+    isLoggedInToBookDepository: boolean;
+    depositoryWishlist: {
+        items: Array<any>;
+        isLoading: boolean;
+        error?: string;
+    };
 }
 
 export const DEFAULT_APP_STATE: AppState = {
     auth: {
         isLoggedIn: false,
         isLoading: false,
+        isBookDepositoryLoginLoading: false,
         stayLoggedIn: false
     },
     home: {
@@ -73,6 +81,12 @@ export const DEFAULT_APP_STATE: AppState = {
     },
     wishlist: {
         isLoading: true,
-        items: null
+        isLoggedInToBookDepository: false,
+        items: null,
+        depositoryWishlist: {
+            items: [],
+            isLoading: false,
+            error: ''
+        }
     }
 };

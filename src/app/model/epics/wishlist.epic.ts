@@ -55,4 +55,17 @@ export class WishlistEpics {
         ))
     )
 
+    fetchDepositoryWishlist = (action$: ActionsObservable<any>) => action$.pipe(
+        ofType(WishlistActions.FETCH_DEPOSITORY_WISHLIST),
+        mergeMap(action => this.wishlistService.fetchDepositoryWishlist().pipe(
+            map(payload => ({
+                type: WishlistActions.FETCH_DEPOSITORY_WISHLIST_SUCCEEDED,
+                payload
+            })),
+            catchError(payload => of({
+                type: WishlistActions.FETCH_DEPOSITORY_WISHLIST_FAILED,
+                payload
+            }))
+        ))
+    )
 }
