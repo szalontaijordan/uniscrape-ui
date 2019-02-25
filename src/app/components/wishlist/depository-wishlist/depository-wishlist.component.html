@@ -1,6 +1,6 @@
 <div class="depository-wishlist">
   <div *ngIf="!isLoggedInToBookDepository; else logout" class="login">
-    <button (click)="ngxSmartModalService.getModal('depositoryLogin').open()">Bejelentkezés ide: Book Depository</button>
+    <button *ngIf="!isBookDepositoryLoginLoading" (click)="ngxSmartModalService.getModal('depositoryLogin').open()">Bejelentkezés ide: Book Depository</button>
     <ngx-smart-modal #depositoryLogin identifier="depositoryLogin">
       <div *ngIf="isBookDepositoryLoginLoading" class="loading">
           <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -54,9 +54,12 @@
     </div>
   </ng-template>
   <div class="items">
-    <div *ngIf="!items?.length">A Book Depository kívánság lista üres</div>
+    <div *ngIf="isLoggedInToBookDepository && !isBookDepositoryLoginLoading && !items?.length">A Book Depository kívánság lista üres</div>
     <div class="item" *ngFor="let book of items">
       <app-book-item [item]="book"></app-book-item>
+    </div>
+    <div *ngIf="isLoggedInToBookDepository && isBookDepositoryLoginLoading" class="loading">
+        Loading
     </div>
   </div>
 </div>

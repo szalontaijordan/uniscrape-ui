@@ -33,6 +33,7 @@ export const authReducer: Reducer<AuthState> = (state: AuthState = DEFAULT_APP_S
                 currentUser: null
             };
         case AuthActions.DEPOSITORY_LOGIN:
+        case AuthActions.DEPOSITORY_CHECK_AUTH:
             return {
                 ...state,
                 isBookDepositoryLoginLoading: true

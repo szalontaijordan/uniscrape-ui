@@ -3,7 +3,7 @@
   <h2>Book Depository Wishlist</h2>
   <app-depository-wishlist
     [isLoggedInToBookDepository]="(wishlist | async).isLoggedInToBookDepository"
-    [isBookDepositoryLoginLoading]="(auth | async ).isBookDepositoryLoginLoading"
+    [isBookDepositoryLoginLoading]="(auth | async).isBookDepositoryLoginLoading"
     [items]="(wishlist | async).depositoryWishlist.items"></app-depository-wishlist>
   <h2>Uniscrape Wishlist</h2>
   <span *ngIf="(wishlist | async).isLoading">Loading...</span>

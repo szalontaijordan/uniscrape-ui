@@ -3,7 +3,7 @@ import { GoogleService } from 'src/app/services/google.service';
 import { ActionsObservable, ofType, Epic } from 'redux-observable';
 import { AuthActions } from '../actions/auth.actions';
 import { map, mergeMap, catchError } from 'rxjs/operators';
-import { of, from } from 'rxjs';
+import { of, from, merge } from 'rxjs';
 import { BookService } from 'src/app/services/book.service';
 import { WishlistActions } from '../actions/wishlist.actions';
 
@@ -77,6 +77,24 @@ export class AuthEpics {
                 this.wishlist.showDepositoryLogin();
                 return {
                     type: AuthActions.DEPOSITOR_LOGOUT_SUCCEEDED,
+                    payload
+                };
+            }),
+            catchError(payload => of({
+                type: AuthActions.DEPOSITORY_LOGIN_FAILED,
+                payload
+            }))
+        ))
+    )
+
+    depositoryCheckAuth = (action$: ActionsObservable<any>) => action$.pipe(
+        ofType(AuthActions.DEPOSITORY_CHECK_AUTH),
+        mergeMap(action => from(this.bookService.checkDepositoryAuth()).pipe(
+            map(payload => {
+                this.wishlist.hideDepositoryLogin();
+                this.wishlist.fetchDepositoryWishlist();
+                return {
+                    type: AuthActions.DEPOSITORY_LOGIN_SUCCEDED,
                     payload
                 };
             }),

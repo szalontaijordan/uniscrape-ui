@@ -24,6 +24,8 @@ export class AuthActions {
   static DEPOSITORY_LOGIN_SUCCEDED = 'DEPOSITORY_LOGIN_SUCCEDED';
   static DEPOSITORY_LOGIN_FAILED = 'DEPOSITORY_LOGIN_FAILED';
 
+  static DEPOSITORY_CHECK_AUTH = 'DEPOSITORY_CHECK_AUTH';
+
   static DEPOSITOR_LOGOUT = 'DEPOSITORY_LOGOUT';
   static DEPOSITOR_LOGOUT_SUCCEEDED = 'DEPOSITOR_LOGOUT_SUCCEEDED';
 
@@ -49,5 +51,9 @@ export class AuthActions {
 
   depositoryLogout(): void {
     this.ngRedux.dispatch({ type: AuthActions.DEPOSITOR_LOGOUT });
+  }
+
+  depositoryCheckAuth(): void {
+    this.ngRedux.dispatch({ type: AuthActions.DEPOSITORY_CHECK_AUTH });
   }
 }

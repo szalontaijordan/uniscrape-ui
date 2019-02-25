@@ -45,4 +45,10 @@ export class BookService {
     depositoryLogout(): Observable<any> {
         return this.http.post('/api/book/depository/auth/logout', {}, { headers: this.google.headersObject });
     }
+
+    checkDepositoryAuth(): Observable<boolean> {
+        return this.http.get<any & { message: string }>('/api/book/depository/auth', { headers: this.google.headersObject }).pipe(
+            map(response => Boolean(response.message))
+        );
+    }
 }
