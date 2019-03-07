@@ -1,6 +1,5 @@
 <div class="home">
   <h1>Uniscrape</h1>
-  <p>Welcome, {{ (auth | async)?.currentUser.name }}</p>
   <div class="sections" *ngIf="(home | async).sectionNames?.length">
     <section *ngFor="let name of (home | async)?.sectionNames">
       <h2>{{ name }}</h2>
