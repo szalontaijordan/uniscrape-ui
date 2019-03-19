@@ -16,7 +16,7 @@ export class AuthService {
       'Authorization': `Bearer ${idToken}`
     };
 
-    return this.http.get<{ message: string }>('http://localhost:8080/api/book/all/auth', { headers }).pipe(
+    return this.http.get<{ message: string }>('/api/book/all/auth', { headers }).pipe(
       map(response => response.message === 'true'),
       catchError(err => of(false))
     );
