@@ -53,7 +53,7 @@
       <button (click)="authActions.depositoryLogout()">Kijelentkezés</button>
     </div>
   </ng-template>
-  <div class="items">
+  <div *ngIf="isLoggedInToBookDepository; else notConnected" class="items">
     <div *ngIf="isLoggedInToBookDepository && !isBookDepositoryLoginLoading && !items?.length">A Book Depository kívánság lista üres</div>
     <div class="item" *ngFor="let book of items">
       <app-book-item [item]="book"></app-book-item>
@@ -62,4 +62,9 @@
         Loading
     </div>
   </div>
+  <ng-template #notConnected>
+    <div class="items">
+        <div>Kijelentkezve a Book Depository-ból</div>
+    </div>
+  </ng-template>
 </div>

@@ -29,6 +29,14 @@ export class AuthActions {
   static DEPOSITOR_LOGOUT = 'DEPOSITORY_LOGOUT';
   static DEPOSITOR_LOGOUT_SUCCEEDED = 'DEPOSITOR_LOGOUT_SUCCEEDED';
 
+  static WATCHER_SUBSCRIPTION_CHECK = 'WATCHER_SUBSCRIPTION_CHECK';
+  static WATCHER_SUBSCRIPTION_CHECK_SUCCEEDED = 'WATCHER_SUBSCRIPTION_CHECK_SUCCEEDED';
+
+  static WATCHER_SUBSCRIPTION_SUBSCRIBE = 'WATCHER_SUBSCRIPTION_SUBSCRIBE';
+  static WATCHER_SUBSCRIPTION_SUBSCRIBE_SUCCEEDED = 'WATCHER_SUBSCRIPTION_SUBSCRIBE_SUCCEEDED';
+  static WATCHER_SUBSCRIPTION_UNSUBSCRIBE = 'WATCHER_SUBSCRIPTION_UNSUBSCRIBE';
+  static WATCHER_SUBSCRIPTION_UNSUBSCRIBE_SUCCEEDED = 'WATCHER_SUBSCRIPTION_UNSUBSCRIBE_SUCCEEDED';
+
   login(stayLoggedIn = false): void {
     this.ngRedux.dispatch({ type: AuthActions.AUTH_LOGIN_STARTED, payload: stayLoggedIn });
   }
@@ -55,5 +63,17 @@ export class AuthActions {
 
   depositoryCheckAuth(): void {
     this.ngRedux.dispatch({ type: AuthActions.DEPOSITORY_CHECK_AUTH });
+  }
+
+  subscriptionCheck(): void {
+    this.ngRedux.dispatch({ type: AuthActions.WATCHER_SUBSCRIPTION_CHECK });
+  }
+
+  subscribeToWatcher(email: string): void {
+    this.ngRedux.dispatch({ type: AuthActions.WATCHER_SUBSCRIPTION_SUBSCRIBE, payload: email });
+  }
+
+  unSubscribeFromWatcher(email: string): void {
+    this.ngRedux.dispatch({ type: AuthActions.WATCHER_SUBSCRIPTION_UNSUBSCRIBE, payload: email });
   }
 }

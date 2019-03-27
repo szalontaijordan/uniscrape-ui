@@ -6,6 +6,11 @@
       <li><a class="navlink" routerLink="/wishlist" routerLinkActive="active">Wishlist</a></li>
     </ul>
     <div class="profile">
+      <div>{{ (auth | async).isSubscribedToWatcher ? 'Subscribed' : 'Not subscribed' }} to update emails</div>
+      <label class="switch">
+        <input (click)="toggleSubscription()" type="checkbox" [checked]="(auth | async).isSubscribedToWatcher">
+        <span class="slider round"></span>
+      </label>
       <div class="username">{{ (auth | async)?.currentUser.name }}</div>
       <div (click)="userProfileClicked = !userProfileClicked" class="image"><img [src]="(auth | async)?.currentUser.imageUrl" alt="Profile picture" /></div>
       <div  *ngIf="userProfileClicked" class="logout-button">

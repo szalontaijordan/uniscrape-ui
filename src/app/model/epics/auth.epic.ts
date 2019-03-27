@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { GoogleService } from 'src/app/services/google.service';
 import { ActionsObservable, ofType, Epic } from 'redux-observable';
 import { AuthActions } from '../actions/auth.actions';
-import { map, mergeMap, catchError } from 'rxjs/operators';
-import { of, from, merge } from 'rxjs';
+import { map, mergeMap, catchError, debounce, debounceTime } from 'rxjs/operators';
+import { of, from, merge, timer } from 'rxjs';
 import { BookService } from 'src/app/services/book.service';
 import { WishlistActions } from '../actions/wishlist.actions';
 
@@ -101,6 +101,48 @@ export class AuthEpics {
             catchError(payload => of({
                 type: AuthActions.DEPOSITORY_LOGIN_FAILED,
                 payload
+            }))
+        ))
+    )
+
+    watcherCheckSubscription = (action$: ActionsObservable<any>) => action$.pipe(
+        ofType(AuthActions.WATCHER_SUBSCRIPTION_CHECK),
+        mergeMap(action => from(this.bookService.checkWatcherSubscription()).pipe(
+            map(payload => ({
+                type: AuthActions.WATCHER_SUBSCRIPTION_CHECK_SUCCEEDED,
+                payload: true
+            })),
+            catchError(payload => of({
+                type: AuthActions.WATCHER_SUBSCRIPTION_CHECK_SUCCEEDED,
+                payload: false
+            }))
+        ))
+    )
+
+    watcherSubscribe = (action$: ActionsObservable<any>) => action$.pipe(
+        ofType(AuthActions.WATCHER_SUBSCRIPTION_SUBSCRIBE),
+        debounce(() => timer(300)),
+        mergeMap(action => from(this.bookService.subscribeToWatcher(action.payload)).pipe(
+            map(payload => ({
+                type: AuthActions.WATCHER_SUBSCRIPTION_SUBSCRIBE_SUCCEEDED,
+            })),
+            catchError(payload => of({
+                type: AuthActions.WATCHER_SUBSCRIPTION_CHECK_SUCCEEDED,
+                payload: false
+            }))
+        ))
+    )
+
+    watcherUnsubscribe = (action$: ActionsObservable<any>) => action$.pipe(
+        ofType(AuthActions.WATCHER_SUBSCRIPTION_UNSUBSCRIBE),
+        debounce(() => timer(300)),
+        mergeMap(action => from(this.bookService.unsubscribeFromWatcher(action.payload)).pipe(
+            map(payload => ({
+                type: AuthActions.WATCHER_SUBSCRIPTION_UNSUBSCRIBE_SUCCEEDED,
+            })),
+            catchError(payload => of({
+                type: AuthActions.WATCHER_SUBSCRIPTION_CHECK_SUCCEEDED,
+                payload: false
             }))
         ))
     )

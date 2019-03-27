@@ -3,6 +3,7 @@ import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs';
 import { AuthState } from 'src/app/model/state';
 import { AuthActions } from 'src/app/model/actions/auth.actions';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -20,10 +21,25 @@ export class NavbarComponent implements OnInit {
   constructor(private authActions: AuthActions) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.authActions.subscriptionCheck();
   }
 
-  logout() {
+  logout(): void {
     this.authActions.logout();
+  }
+
+  toggleSubscription(): boolean {
+    this.auth.pipe(
+      map(auth => {
+        const email = auth.currentUser.email;
+        if (!auth.isSubscribedToWatcher) {
+          this.authActions.subscribeToWatcher(email);
+        } else {
+          this.authActions.unSubscribeFromWatcher(email);
+        }
+      })
+    ).subscribe().unsubscribe();
+    return false;
   }
 }

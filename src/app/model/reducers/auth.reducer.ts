@@ -44,6 +44,21 @@ export const authReducer: Reducer<AuthState> = (state: AuthState = DEFAULT_APP_S
                 ...state,
                 isBookDepositoryLoginLoading: false
             };
+        case AuthActions.WATCHER_SUBSCRIPTION_CHECK_SUCCEEDED:
+            return {
+                ...state,
+                isSubscribedToWatcher: action.payload
+            };
+        case AuthActions.WATCHER_SUBSCRIPTION_SUBSCRIBE_SUCCEEDED:
+            return {
+                ...state,
+                isSubscribedToWatcher: true
+            };
+        case AuthActions.WATCHER_SUBSCRIPTION_UNSUBSCRIBE_SUCCEEDED:
+            return {
+                ...state,
+                isSubscribedToWatcher: false
+            };
         default:
             return {
                 ...state

@@ -51,4 +51,23 @@ export class BookService {
             map(response => Boolean(response.message))
         );
     }
+
+    checkWatcherSubscription(): Observable<boolean> {
+        return this.http.get<any & { message: string }>('/api/internal/watcher/subscription', { headers: this.google.headersObject }).pipe(
+            map(response => Boolean(response.message))
+        );
+    }
+
+    subscribeToWatcher(email: string): Observable<boolean> {
+        return this.http.post<any & { message: string }>('/api/internal/watcher/subscription', { email }, { headers: this.google.headersObject }).pipe(
+            map(response => Boolean(response.message))
+        );
+    }
+
+    unsubscribeFromWatcher(email: string): Observable<boolean> {
+        return this.http.delete<any>('/api/internal/watcher/subscription/' + email, { headers: this.google.headersObject }).pipe(
+            map(response => true)
+        );
+    }
+
 }
