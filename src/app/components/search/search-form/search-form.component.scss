@@ -1,5 +1,5 @@
 #search {
-    width: 80%;
+    width: 100%;
     margin: 16px auto;
     display: block;
     height: 48px;
@@ -9,12 +9,13 @@
     & + button {
         position: absolute;
         top: 0;
-        right: calc(10% - 8px);
+        right: 8px;
         bottom: 0;
         width: 48px;
         border: none;
         background: none;
         font-size: 1em;
+        cursor: pointer;
 
         &:focus {
             border: none;

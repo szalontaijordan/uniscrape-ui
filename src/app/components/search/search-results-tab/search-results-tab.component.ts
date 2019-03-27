@@ -13,6 +13,9 @@ export class SearchResultsTabComponent implements OnInit {
   @Input()
   isLoading: boolean;
 
+  @Input()
+  isNextPageLoading: boolean;
+
   constructor() {
   }
 

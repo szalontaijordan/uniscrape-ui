@@ -8,7 +8,11 @@ export const searchReducer: Reducer<SearchState> = (state: SearchState = DEFAULT
             return {
                 ...state,
                 searchTerm: action.payload.searchTerm,
-                isLoading: true
+                isLoading: true,
+                results: {
+                    ...state.results,
+                    [action.payload.activeTab]: []
+                }
             };
         case SearchActions.SEARCH_SUCCEEDED:
             return {

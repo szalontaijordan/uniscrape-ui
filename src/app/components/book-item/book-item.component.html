@@ -7,17 +7,17 @@
       <span><i class="far fa-bookmark"></i></span>
     </ng-template>
   </button>
-  <a class="itemURL" [href]="itemURL">
+  <a target="_blank" class="itemURL" [href]="itemURL">
     <div class="img-wrapper">
       <img [src]="item.image" [alt]="item.title" />
     </div>
   </a>
-  <a class="itemURL" [href]="itemURL">
+  <a target="_blank" class="itemURL" [href]="itemURL">
     <div class="title">{{ item.title }}</div>
   </a>
   <div class="isbn">ISBN: {{ item.ISBN }}</div>
   <div class="author">
-    <a class="itemURL" [href]="authorURL">{{ item.author.name }}</a>
+    <a target="_blank" class="itemURL" [href]="authorURL">{{ item.author.name }}</a>
   </div>
   <div class="price">{{ item.price === -1 ? '-' : item.price }} Ft</div>
   <div class="date">{{ item.publicationDate | date : 'yyyy.MM.dd.' }}</div>

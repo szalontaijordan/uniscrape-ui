@@ -28,6 +28,10 @@
     .title {
         font-size: 18px;
         font-weight: 500;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .isbn {
@@ -35,7 +39,10 @@
     }
 
     .author {
-
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .price {

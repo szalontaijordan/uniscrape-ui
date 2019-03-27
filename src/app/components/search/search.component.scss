@@ -1,6 +1,5 @@
 .recent {
-    width: 80%;
-    margin: 0 auto;
+    width: 100%;
 
     span.recent-item {
         display: inline-block;
@@ -19,6 +18,24 @@
     }
 }
 
-.active {
-    font-weight: 700;
+ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+
+    li {
+        flex: 0 0 33%;
+        padding: 16px 8px;
+        cursor: pointer;
+        text-align: center;
+        border: 1px solid #4285f4;
+
+        &.active {
+            background: #4285f4;
+            font-weight: 700;
+            color: white;
+        }
+    }
 }
