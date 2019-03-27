@@ -22,7 +22,13 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authActions.subscriptionCheck();
+    this.auth.subscribe({
+      next: auth => {
+        if (auth.isLoggedIn && !auth.isLoading) {
+          this.authActions.subscriptionCheck();
+        }
+      }
+    });
   }
 
   logout(): void {
